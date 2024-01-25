@@ -17,6 +17,7 @@ namespace ApiProject.Persistence
 
             //Repository Registration
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+            services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
         }
     }
 }
