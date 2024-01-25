@@ -1,14 +1,15 @@
 ﻿using ApiProject.Application.Interfaces.Repositories;
 using ApiProject.Domain.Common;
+using ApiProject.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiProject.Persistence.Repositories
 {
     public class WriteRepository<T> : IWriteRepository<T> where T : class, IEntityBase, new()
     {
-        private readonly DbContext _dbContext;
+        private readonly AppDbContext _dbContext;
 
-        public WriteRepository(DbContext dbContext)
+        public WriteRepository(AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -1,5 +1,6 @@
 ﻿using ApiProject.Application.Interfaces.Repositories;
 using ApiProject.Domain.Common;
+using ApiProject.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace ApiProject.Persistence.Repositories
 {
     public class ReadRepository<T> : IReadRepository<T> where T : class, IEntityBase, new()
     {
-        private readonly DbContext _context;
+        private readonly AppDbContext _context;
 
-        public ReadRepository(DbContext context)
+        public ReadRepository(AppDbContext context)
         {
             _context = context;
         }
