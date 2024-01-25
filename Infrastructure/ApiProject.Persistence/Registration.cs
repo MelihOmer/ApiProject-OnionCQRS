@@ -1,6 +1,8 @@
 ﻿using ApiProject.Application.Interfaces.Repositories;
+using ApiProject.Application.Interfaces.UnitOfWorks;
 using ApiProject.Persistence.Context;
 using ApiProject.Persistence.Repositories;
+using ApiProject.Persistence.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,8 @@ namespace ApiProject.Persistence
             //Repository Registration
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
+
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
         }
     }
 }
