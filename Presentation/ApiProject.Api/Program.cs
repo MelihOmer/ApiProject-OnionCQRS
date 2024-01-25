@@ -1,4 +1,5 @@
 using ApiProject.Persistence;
+using ApiProject.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,9 @@ builder.Configuration
     .AddJsonFile("appsettings.json",optional:false)
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json",optional:true);
 
+//Custom Services Registration
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddApplication();
 
 
 var app = builder.Build();
