@@ -1,5 +1,6 @@
 using ApiProject.Persistence;
 using ApiProject.Application;
+using ApiProject.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Configuration
 //Custom Services Registration
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddMapper();
 
 
 var app = builder.Build();

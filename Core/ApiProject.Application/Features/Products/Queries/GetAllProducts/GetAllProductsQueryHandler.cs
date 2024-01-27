@@ -1,31 +1,32 @@
-﻿using ApiProject.Application.Interfaces.UnitOfWorks;
+﻿using ApiProject.Application.Dtos;
+using ApiProject.Application.Interfaces.AutoMapper;
+using ApiProject.Application.Interfaces.UnitOfWorks;
 using ApiProject.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiProject.Application.Features.Products.Queries.GetAllProducts
 {
     public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQueryRequest, IList<GetAllProductsQueryResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public GetAllProductsQueryHandler(IUnitOfWork unitOfWork)
+        public GetAllProductsQueryHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<IList<GetAllProductsQueryResponse>> Handle(GetAllProductsQueryRequest request, CancellationToken cancellationToken)
         {
-            var products = await _unitOfWork.GetReadRepository<Product>().GetAllAsync();
+            var products = await _unitOfWork.GetReadRepository<Product>().GetAllAsync(include:x => x.Include(b => b.Brand));
+            _mapper.Map<BrandDto, Brand>(new Brand());
 
-
-            List<GetAllProductsQueryResponse> responseList = products.Select(x => new GetAllProductsQueryResponse
-            {
-                Title = x.Title,
-                Price = x.Price - (x.Price*x.Discount/100), 
-                Discount = x.Discount,
-                Description = x.Description
-            }).ToList();
-            return responseList;
+            var mapList = _mapper.Map<GetAllProductsQueryResponse, Product>(products);
+            foreach (var product in mapList)
+                product.Price -= (product.Price * product.Discount / 100);
+            return mapList;
         }
     }
 }
