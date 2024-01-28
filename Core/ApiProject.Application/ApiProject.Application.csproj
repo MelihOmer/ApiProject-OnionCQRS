@@ -15,8 +15,4 @@
     <ProjectReference Include="..\ApiProject.Domain\ApiProject.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Products\Common\" />
-  </ItemGroup>
-
 </Project>
