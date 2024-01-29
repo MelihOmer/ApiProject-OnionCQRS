@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ApiProject.Application.Features.Products.Command.UpdateProduct
 {
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommandRequest,Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace ApiProject.Application.Features.Products.Command.UpdateProduct
             _mapper = mapper;
         }
 
-        public async Task Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
             var product = await _unitOfWork.GetReadRepository<Product>().GetAsync(x => x.Id == request.Id && !x.IsDeleted);
 
@@ -32,6 +32,7 @@ namespace ApiProject.Application.Features.Products.Command.UpdateProduct
 
             await _unitOfWork.GetWriteRepository<Product>().UpdateAsync(map);
             await _unitOfWork.SaveAsync();
+            return Unit.Value;
         }
     }
 }
