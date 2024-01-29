@@ -33,8 +33,7 @@ namespace ApiProject.Application.Exceptions
 
 			List<string> errors = new()
 			{
-				$"Hata Mesajı : {ex.Message}",
-				$"Mesaj Açıklaması : {ex.InnerException?.ToString()}"
+				$"Hata Mesajı : {ex.Message}"
 			};
 
 
