@@ -1,5 +1,6 @@
 using ApiProject.Persistence;
 using ApiProject.Application;
+using ApiProject.Infrastructure;
 using ApiProject.Mapper;
 using ApiProject.Application.Exceptions;
 
@@ -23,6 +24,7 @@ builder.Configuration
 //Custom Services Registration
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddMapper();
 
 
