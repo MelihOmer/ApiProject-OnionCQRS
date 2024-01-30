@@ -1,18 +1,21 @@
-﻿using ApiProject.Application.Interfaces.AutoMapper;
+﻿using ApiProject.Application.Bases;
+using ApiProject.Application.Features.Products.Rules;
+using ApiProject.Application.Interfaces.AutoMapper;
 using ApiProject.Application.Interfaces.UnitOfWorks;
 using ApiProject.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace ApiProject.Application.Features.Products.Command.DeleteProduct
 {
-    public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommandRequest, Unit>
+    public class DeleteProductCommandHandler :BaseHandler,IRequestHandler<DeleteProductCommandRequest, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteProductCommandHandler(IUnitOfWork unitOfWork)
+        public DeleteProductCommandHandler(ProductRules productRules, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContext) : base(mapper, unitOfWork, httpContext)
         {
-            _unitOfWork = unitOfWork;
         }
+
         public async Task<Unit> Handle(DeleteProductCommandRequest request, CancellationToken cancellationToken)
         {
             var product = await _unitOfWork.GetReadRepository<Product>().GetAsync(x => x.Id == request.Id && !x.IsDeleted);
