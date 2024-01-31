@@ -11,5 +11,11 @@ namespace ApiProject.Application.Features.Auth.Rules
             if (user is not null) throw new UserAlreadyExistException();
             return Task.CompletedTask;
         }
+        public Task EmailOrPasswordShouldNotBeInvalid(User? user,bool checkPassword)
+        {
+            if (user is null || !checkPassword)
+                throw new EmailOrPasswordShouldNotBeInvalidException();
+            return Task.CompletedTask;
+        }
     }
 }
