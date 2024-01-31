@@ -3,6 +3,7 @@ using ApiProject.Application.Features.Products.Command.UpdateProduct;
 using ApiProject.Application.Features.Products.Common.CreateProduct;
 using ApiProject.Application.Features.Products.Queries.GetAllProducts;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiProject.Api.Controllers
@@ -18,6 +19,7 @@ namespace ApiProject.Api.Controllers
             _mediator = mediator;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllProducts()
         {
             var response = await _mediator.Send(new GetAllProductsQueryRequest());
