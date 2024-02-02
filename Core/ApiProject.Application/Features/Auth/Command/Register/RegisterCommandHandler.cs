@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ApiProject.Application.Features.Auth.Command.Register
 {
-    public class RegisterCommandHandler : BaseHandler,IRequestHandler<RegisterCommandRequest, Unit>
+    public class RegisterCommandHandler : BaseHandler,IRequestHandler<RegisterCommandRequest,Unit>
     {
         private readonly AuthRules authRules;
         private readonly UserManager<User> userManager;
